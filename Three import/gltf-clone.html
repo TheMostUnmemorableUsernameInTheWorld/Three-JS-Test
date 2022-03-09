@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>    
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>3D Model</title>
+        <link href="gltf.css" ></link>
+    </head>
+    <body style="margin: 0;">
+        <script src="three.js"></script>
+        <script type="module" src="three.js"></script>
+        <script type="module">
+            import {GLTFLoader} from "./GLTFLoader.js";
+
+            var scene = new THREE.Scene();
+            var camera = new THREE.PerspectiveCamera(
+                75,
+                window.innerWidth/window.innerHeight,
+                .01,
+                1000
+            );
+            var renderer = new THREE.WebGLRenderer();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+
+            var loader = new GLTFLoader();
+            var model;
+            var animations;
+            var idleAction, runAction, roarAction, biteAction, tailSwipeAction;
+            var actions;
+            var mixer;
+            loader.load("scene.gltf", function(gltf){
+                model = gltf.scene;
+                scene.add(gltf.scene);
+            });
+            scene.background = new THREE.Color(0xFFFFFF);
+            var light = new THREE.HemisphereLight(0xffffff, 0x000000, 7);
+            scene.add(light);
+            camera.position.set(0, 10, 20);
+            console.log('lol');
+            function animate(){
+                requestAnimationFrame(animate);
+                renderer.render(scene, camera);
+            }
+            animate();
+        </script>
+    </body>
+</html>
